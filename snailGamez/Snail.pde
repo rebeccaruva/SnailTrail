@@ -1,8 +1,8 @@
-class Snail1
+class Snail
 {
   int x, y;
   color c = #CDBE7A;
-  Snail1()
+  Snail()
   {
     x=250;
     y=496;

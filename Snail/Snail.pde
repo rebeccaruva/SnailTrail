@@ -11,9 +11,6 @@ int twoCounter = 0;
 Snail1 bottom;
 Snail1 top;
 Food foodie;
-int tail;
-//float foodx = random(10,490);
-//float foody = random(10,490);
 
 void setup()
 {
@@ -104,6 +101,9 @@ void draw()
 {
   println("One: "+ oneCounter);
   println("Two: "+ twoCounter);
+  textSize(40);
+  text("One:"+ oneCounter, 10, 50);
+  text("Two:"+ twoCounter, 850, 50);
   bottom.show();
   top.show();
   if (food) {
@@ -141,28 +141,8 @@ void draw()
   if (s == true)
   {
     top.moveDown();
-  } 
-  if (dist(foodie.getX(), foodie.getY(), top.x,top.y) < 20){
-    //foodx = random(10,500);
-    //foody = random(10,500);
-    count1 = true;
-  }else{
-    count1 = false;
   }
-  if (count1 == true){
-    food = true;
-    oneCounter = oneCounter +1;
-  }
-  if (dist(foodie.getX(), foodie.getY(), bottom.x, bottom.y) < 20){
-    //foodx = random(10,500);
-    //foody = random(10,500);
-    eat = 0;
-    count2 = true;
-  }else{
-    count2 = false;
-  }
-  if (count2 == true){
-    food = true;
-    twoCounter = twoCounter +1;
-  }
+  
+  foodie.changeFoodTop();
+  foodie.changeFoodBottom();
 }
