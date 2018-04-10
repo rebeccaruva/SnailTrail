@@ -2,7 +2,7 @@
 //add moving with keys
 PGraphics pg;
 PVector start;
-boolean begin, pick, game;
+boolean begin, pick, game, reset;
 
 void setup() {
   size(500, 500, P2D);
@@ -73,10 +73,11 @@ void gameScene() {
  
   fill(255,0,0);
   ellipse(start.x, start.y, 20, 20);
+  reset = false;
 }
 
 void pickScene() {
-  background(50, 225, 50);
+  background(75, 255, 150);
   
   fill(255);
   rect(0, 200, 50, 50, 20);
@@ -93,11 +94,22 @@ void pickScene() {
 
 
 void newGame() {
- start = new PVector(100, 100);
+  if(!reset) {
+    resetPG();
+    reset = true;
+  }
  
- begin = true;
- pick = false;
- game = false;
+  start = new PVector(100, 100);
  
- noStroke();
+  begin = true;
+  pick = false;
+  game = false;
+ 
+  noStroke();
+}
+
+void resetPG() {
+  pg.beginDraw();
+  pg.clear();
+  pg.endDraw();
 }

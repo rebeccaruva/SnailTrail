@@ -1,6 +1,7 @@
 
 boolean right = false, left = false, d = false, a = false;
 boolean up = false, down = false, w = false, s = false;
+boolean food;
 int speed = 3;
 color eat = 200;
 boolean count1 = false;
@@ -9,9 +10,10 @@ int oneCounter = 0;
 int twoCounter = 0;
 Snail1 bottom;
 Snail1 top;
+Food foodie;
 int tail;
-float foodx = random(10,490);
-float foody = random(10,490);
+//float foodx = random(10,490);
+//float foody = random(10,490);
 
 void setup()
 {
@@ -19,11 +21,16 @@ void setup()
   noStroke();
   bottom = new Snail1();
   top = new Snail1();
+  
+  foodie = new Food();
+  
   top.y = 500;
   top.x = 496 + 250;
   size(1000, 1000);
   background(#385D38);
   top.c = #AE701F;
+  
+  food = true;
 }
 void keyPressed()
 {
@@ -99,6 +106,10 @@ void draw()
   println("Two: "+ twoCounter);
   bottom.show();
   top.show();
+  if (food) {
+    foodie.displayFood();
+    food = false;
+  }
   if (left==true)
   {
     bottom.moveleft();
@@ -131,74 +142,27 @@ void draw()
   {
     top.moveDown();
   } 
-  if (dist(foodx, foody, top.x,top.y) < 20){
-    foodx = random(10,500);
-    foody = random(10,500);
+  if (dist(foodie.getX(), foodie.getY(), top.x,top.y) < 20){
+    //foodx = random(10,500);
+    //foody = random(10,500);
     count1 = true;
   }else{
     count1 = false;
   }
   if (count1 == true){
+    food = true;
     oneCounter = oneCounter +1;
   }
-  if (dist(foodx, foody, bottom.x, bottom.y) < 20){
-    foodx = random(10,500);
-    foody = random(10,500);
+  if (dist(foodie.getX(), foodie.getY(), bottom.x, bottom.y) < 20){
+    //foodx = random(10,500);
+    //foody = random(10,500);
     eat = 0;
     count2 = true;
   }else{
     count2 = false;
   }
   if (count2 == true){
+    food = true;
     twoCounter = twoCounter +1;
   }
-}
-class Snail1
-{
-  int x, y;
-  color c = #CDBE7A;
-  Snail1()
-  {
-    x=250;
-    y=496;
-  }
-  void show()
-  {
-    fill(c,20);
-    ellipse(x, y, 60, 60);
-    fill(eat);
-    ellipse(foodx, foody, 100, 100);
-  }
-  void moveleft()
-  {
-    if (x>=10)
-    {
-      x = x - speed;
-    }
-  }
-  void moveright()
-  {
-    if (x<=990)
-    {
-      x += 5;
-    }
-  }
-  void moveDown()
-  {
-    y =  y + speed;
-    if (y >= 100) {
-      y = y + 0;
-    }
-  }
-  void moveUp()
-  {
-    y = y - speed;
-    if (y <= 990) {
-      y = y - 0;
-    }
-  }
-}
-class Food
-{
-  
 }
