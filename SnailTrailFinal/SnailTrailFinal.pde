@@ -327,7 +327,7 @@ void gameScene() {
   text("One:"+ oneCounter, 10, 50);
   text("Two:"+ twoCounter, 840, 50);
 
-  if (oneCounter >= 1) {
+  if (oneCounter >= 10) {
     fill(255, 150);
     rect(50, 75, 900, 900, 45);
     fill(0);
@@ -341,7 +341,7 @@ void gameScene() {
     }
   }
 
-  if (twoCounter >= 1) {
+  if (twoCounter >= 10) {
     fill(255, 150);
     rect(50, 75, 900, 900, 45);
     fill(0);
