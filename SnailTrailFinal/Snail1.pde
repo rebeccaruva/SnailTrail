@@ -3,6 +3,7 @@ class Snail1
   //load what will move the snail!!
   PVector start, velocityX, velocityY, velocity;
   boolean topp;
+  boolean timeStart;
   
   Snail1() {
     
@@ -77,29 +78,36 @@ class Snail1
     checkx = locationsX.get(i);
     checky = locationsY.get(i);
       if(checkx == int(start.x) && checky == int(start.y)) {
-        //println("OMG MY SLIME");
-        if(moving1) {
-          velocityX.x = 1;
-          velocityY.y = 1;
-        }
-        if(moving2) {
-          velocityX.x = 1;
-          velocityY.y = 1;
-        }
-        timer = millis();
-        //println(timer);
+        println("OMG MY SLIME");
+        //if(moving1) {
+        //  velocityX.x = 1;
+        //  velocityY.y = 1;
+        //}
+        //if(moving2) {
+        //  velocityX.x = 1;
+        //  velocityY.y = 1;
+        //}
+        //timer = millis();
+        //timeStart = true;
+        
+        //println(velocityX.x+", "+velocityY.y);
       }
-    }
-    if(millis()>timer+5000) {
+      if(millis()>timer+5000 && timeStart) {
       //println(timer);
       timer = 0;
       velocityX.x = 2;
       velocityY.y = 2;
+      timeStart = false;
     }
+    }
+  
+  }
+  
+  void addLocations() {
     if(moving1 || moving2) {
       locationsX.append(int(start.x));
       locationsY.append(int(start.y));
-      //println("i added");
+      println("i added");
     }
   }
   

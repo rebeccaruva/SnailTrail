@@ -45,7 +45,7 @@ IntList locationsY;
 int checkx, checky, timer;
 
 void setup()
-{
+{  
   //start up!!
   size(1000, 1000, P2D);
   pg = createGraphics(1000, 1000, P2D);
@@ -327,7 +327,7 @@ void gameScene() {
   text("One:"+ oneCounter, 10, 50);
   text("Two:"+ twoCounter, 840, 50);
 
-  if (oneCounter >= 10) {
+  if (oneCounter >= 1) {
     fill(255, 150);
     rect(50, 75, 900, 900, 45);
     fill(0);
@@ -341,7 +341,7 @@ void gameScene() {
     }
   }
 
-  if (twoCounter >= 10) {
+  if (twoCounter >= 1) {
     fill(255, 150);
     rect(50, 75, 900, 900, 45);
     fill(0);
@@ -359,8 +359,11 @@ void gameScene() {
   top.checkLocation();
   bottom.checkLocation();
   
-  println("uno:"+moving1);
-  println("two:"+moving2);
+  top.addLocations();
+  bottom.addLocations();
+  
+  //println("uno:"+moving1);
+  //println("two:"+moving2);
 }
 
 void newGame() {
@@ -374,8 +377,20 @@ void newGame() {
 
   begin = true;
   game = false;
+  oneCounter=0;
+  twoCounter=0;
 
   noStroke();
+  
+  //change snail 2 to start different position!!
+  bottom.start.x = 500;
+  bottom.topp = true;
+  
+  //clear the arraylist first thing!!
+  locationsX.clear();
+  locationsY.clear();
+  
+  playsound=true;
 }
 
 void resetPG() {
