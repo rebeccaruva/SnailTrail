@@ -28,14 +28,14 @@ Snail1 top;
 Food foodie;
 PFont font40;
 PGraphics pg;
-PImage gameBG, title, snailImgBottom, snailImgTop, snailSideOne, snailSideTwo;
+PImage gameBG, title, titleBG, snailImgBottom, snailImgTop, snailSideOne, snailSideTwo, wasd, arrow;
 float offPos1, offPos2, offPos3, offPos4;
 
 //move that snail!!
 PVector start, velocityX, velocityY, velocity;
 
 //make the game work!!
-boolean begin, game, reset, moving1, moving2;
+boolean skipInstruction, begin, game, menu, reset, moving1, moving2;
 
 //list for past positions!!
 IntList locationsX;
@@ -58,6 +58,7 @@ void setup()
 
   gameBG = loadImage("gamebg.png");
   title = loadImage("titletext.png");
+  titleBG = loadImage("titlescreen.png");
   snailImgBottom = loadImage("right.png");
   snailImgTop = loadImage("bexSnailRight.png");
   snailImgTop.resize(175, 65);
@@ -68,6 +69,8 @@ void setup()
   offPos4 = 32;
   snailSideOne = loadImage("snailside.png");
   snailSideTwo = loadImage("bexSnailSelect1.png");
+  wasd = loadImage("wasd.png");
+  arrow = loadImage("arrows.png");
 
   foodie = new Food();
 
@@ -91,6 +94,7 @@ void setup()
   food = true;
   begin = true;
   game = false;
+  skipInstruction = false;
 }
 
 void keyReleased()
@@ -249,21 +253,69 @@ void draw()
     text("Go!", 795, 565);
 
     if (mouseX>750 && mouseY>500 && mouseX<925 && mouseY<600) {
-      fill(210, 230, 250);
+      fill(255, 255, 150);
       rect(750, 500, 175, 100, 20);
       fill(0);
       text("Go!", 795, 565);
       if (mousePressed) {
         player.rewind();
         player.play();
-        game = true;
+        menu = true;
         begin = false;
+        if(skipInstruction) {
+          game=true;
+        }
       }
     }
   }
 
-  if (game) {
+  if (menu && !skipInstruction) {
+    menuScene();
+  } if (game) {
     gameScene();
+  }
+}
+
+void menuScene() {
+  //background(236, 255, 221);
+  image(titleBG, 0, 0, 1000, 1000);
+  
+  //dividers
+  //fill(185, 240, 250);
+  fill(236, 255, 221, 200);
+  rect(25, 25, 950, 360, 40);
+  rect(25, 430, 950, 380, 40);
+  
+  //text
+  fill(0);
+  textFont(font40);
+  text("Player One uses WASD to play.", 130, 100);
+  image(snailSideOne, 100, 150, 400, 200); 
+  image(wasd, 500, 150, 400, 200);
+  text("Player Two uses ARROW KEYS to play.", 45, 500);
+  image(snailSideTwo, 100, 550, 400, 230);
+  image(arrow, 500, 550, 400, 230);
+  
+  //button to start
+  //fill(255, 255, 150);
+  fill(255);
+  rect(415, 850, 175, 100, 20);
+  fill(0);
+  textFont(font40);
+  text("Start", 440, 915);
+  
+  if (mouseX>415 && mouseY>850 && mouseX<590 && mouseY<950) {
+      //fill(110, 196, 45);
+      fill(255, 255, 150);
+      rect(415, 850, 175, 100, 20);
+      fill(0);
+      text("Start", 440, 915);
+      if (mousePressed) {
+        player.rewind();
+        player.play();
+        game = true;
+        menu = false;
+      }
   }
 }
 
@@ -325,7 +377,7 @@ void gameScene() {
   text("Two:"+ twoCounter, 840, 50);
 
   if (oneCounter >= 10) {
-    fill(255, 150);
+    fill(255, 255, 150, 200);
     rect(50, 75, 900, 900, 45);
     fill(0);
     text("Player One Won!", 100, 200);
@@ -339,7 +391,7 @@ void gameScene() {
   }
 
   if (twoCounter >= 10) {
-    fill(255, 150);
+    fill(255, 255, 150, 200);
     rect(50, 75, 900, 900, 45);
     fill(0);
     text("Player Two Won!", 100, 200);
@@ -382,6 +434,7 @@ void newGame() {
 
   begin = true;
   game = false;
+  skipInstruction = true;
   oneCounter=0;
   twoCounter=0;
 
